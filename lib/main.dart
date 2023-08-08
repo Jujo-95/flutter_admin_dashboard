@@ -41,6 +41,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Admin dashboard',
       initialRoute: '/',
+      navigatorKey: NavigationService.navigatorKey,
       onGenerateRoute: Flurorouter.router.generator,
       builder: (_, child) {
         final authProvider = Provider.of<AuthProvider>(context);

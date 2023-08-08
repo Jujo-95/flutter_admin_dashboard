@@ -24,7 +24,6 @@ class Flurorouter {
         handler: AuthHandlers.login, transitionType: TransitionType.none);
     router.define(registerRoute,
         handler: AuthHandlers.register, transitionType: TransitionType.none);
-    //router.define(dashboarRoute, handler: handler);
 
     // Dashboard
     router.define(dashboardRoute,

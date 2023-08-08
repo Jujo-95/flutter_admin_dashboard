@@ -1,8 +1,17 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/ui/views/dashboard_view.dart';
+import 'package:admin_dashboard/ui/views/login_view.dart';
 import 'package:fluro/fluro.dart';
+import 'package:provider/provider.dart';
 
 class DashboarHandlers {
   static Handler dashboard = Handler(handlerFunc: (context, params) {
-    return const DashboardView();
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context!);
+
+    if (authProvider.authState == AuthState.notAuthenticated) {
+      return const LoginView();
+    } else {
+      return const DashboardView();
+    }
   });
 }

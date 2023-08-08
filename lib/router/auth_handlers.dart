@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 
 class AuthHandlers {
   static Handler login = Handler(handlerFunc: (context, params) {
-    final AuthProvider authProvider =
-        Provider.of<AuthProvider>(context!, listen: false);
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context!);
 
     if (authProvider.authState == AuthState.notAuthenticated) {
       return const LoginView();
@@ -18,6 +17,12 @@ class AuthHandlers {
   });
 
   static Handler register = Handler(handlerFunc: (context, params) {
-    return const RegisterView();
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context!);
+
+    if (authProvider.authState == AuthState.notAuthenticated) {
+      return const RegisterView();
+    } else {
+      return const DashboardView();
+    }
   });
 }
