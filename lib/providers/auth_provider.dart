@@ -33,7 +33,7 @@ class AuthProvider extends ChangeNotifier {
       return false;
     }
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(milliseconds: 10));
     authState = AuthState.authenticated;
 
     notifyListeners();
