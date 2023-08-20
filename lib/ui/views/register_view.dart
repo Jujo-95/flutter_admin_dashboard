@@ -31,6 +31,8 @@ class RegisterView extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 370),
               child: Form(
                 autovalidateMode: AutovalidateMode.always,
+                key: Provider.of<RegisterFormProvider>(context, listen: false)
+                    .formKey,
                 child: Column(
                   children: [
                     CustomInput(
@@ -73,12 +75,13 @@ class RegisterView extends StatelessWidget {
                           final validForm = registerFormProvider.validateForm();
                           if (!validForm) return;
 
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .register(
-                            registerFormProvider.email,
-                            registerFormProvider.password,
-                            registerFormProvider.name,
-                          );
+                          final authProvider =
+                              Provider.of<AuthProvider>(context, listen: false);
+
+                          authProvider.register(
+                              registerFormProvider.email,
+                              registerFormProvider.password,
+                              registerFormProvider.name);
                         },
                         text: 'Crear cuenta'),
                     const SizedBox(height: 24),
@@ -87,14 +90,12 @@ class RegisterView extends StatelessWidget {
                         final validForm = registerFormProvider.validateForm();
                         if (!validForm) return;
 
-                        Provider.of<AuthProvider>(
-                          context,
-                          listen: false,
-                        ).register(
-                          registerFormProvider.email,
-                          registerFormProvider.password,
-                          registerFormProvider.name,
-                        );
+                        final authProvider =
+                            Provider.of<AuthProvider>(context, listen: false);
+                        authProvider.register(
+                            registerFormProvider.email,
+                            registerFormProvider.password,
+                            registerFormProvider.name);
 
                         Navigator.pushNamed(context, Flurorouter.loginRoute);
                       },

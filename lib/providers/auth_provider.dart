@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/api/CafeApi.dart';
+import 'package:admin_dashboard/models/AuthResponse.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:admin_dashboard/services/navigarion_services.dart';
@@ -10,6 +11,7 @@ enum AuthState { checking, authenticated, notAuthenticated }
 class AuthProvider extends ChangeNotifier {
   AuthState authState = AuthState.checking;
   String? _token;
+  Usuario? user;
 
   AuthProvider() {
     isAuthenticated();
@@ -32,10 +34,14 @@ class AuthProvider extends ChangeNotifier {
       'correo': email,
       'password': password,
     };
-
-    CafeApi.httpPost('/usuarios', data)
-        .then((json) => print(json))
-        .catchError((e) {
+    print('data: $data');
+    CafeApi.httpPost('/usuarios', data).then((data) {
+      final authResponse = AuthResponse.fromJson(data);
+      user = authResponse.usuario;
+      authState = AuthState.authenticated;
+      LocalStorage.pref.setString('token', authResponse.token);
+      notifyListeners();
+    }).catchError((e) {
       print('error en $e  )');
     });
 

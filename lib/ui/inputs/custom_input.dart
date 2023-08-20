@@ -36,7 +36,7 @@ class CustomInput extends StatelessWidget {
               ]),
         ),
         TextFormField(
-          onChanged: (_) => onChanged,
+          onChanged: (_) => onChanged(_),
           validator: (_) => validator(_),
           style: style,
           decoration: decoration,
