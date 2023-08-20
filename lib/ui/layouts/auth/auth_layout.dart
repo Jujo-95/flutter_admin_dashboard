@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/services/colors_custom.dart';
 import 'package:admin_dashboard/ui/layouts/auth/widgets/background_manufacture.dart';
 import 'package:admin_dashboard/ui/layouts/auth/widgets/custom_gradient_background.dart';
 import 'package:admin_dashboard/ui/layouts/auth/widgets/custom_title.dart';
@@ -37,7 +38,7 @@ class _MobileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.black),
+      decoration: BoxDecoration(color: ColorsCustom.backgroundColor),
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -71,7 +72,7 @@ class _DesktopBody extends StatelessWidget {
           Container(
             width: 600,
             height: size.height + 28,
-            color: Colors.black,
+            color: ColorsCustom.backgroundColor,
             child: Column(
               children: [
                 const CustomTitle(),

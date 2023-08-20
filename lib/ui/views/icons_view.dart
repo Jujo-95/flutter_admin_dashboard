@@ -1,8 +1,8 @@
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
 import 'package:flutter/material.dart';
 
-class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+class IconsView extends StatelessWidget {
+  const IconsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class DashboardView extends StatelessWidget {
       children: [
         Center(
             child: Text(
-          'Dasboard view',
+          'Icons View',
           style: CustomLabels.h1,
         ))
       ],

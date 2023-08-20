@@ -1,8 +1,10 @@
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/login_form_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
+import 'package:admin_dashboard/services/colors_custom.dart';
 import 'package:admin_dashboard/services/validation_service.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
+import 'package:admin_dashboard/ui/inputs/custom_input.dart';
 import 'package:admin_dashboard/ui/inputs/custom_input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,7 @@ class LoginView extends StatelessWidget {
             horizontal: 24,
             vertical: 5,
           ),
-          color: Colors.black,
+          color: ColorsCustom.backgroundColor,
           child: Center(
               child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 370),
@@ -33,30 +35,25 @@ class LoginView extends StatelessWidget {
               key: loginFormProvider.formKey,
               child: Column(
                 children: [
-                  TextFormField(
+                  CustomInput(
                     validator: (value) =>
                         validationService.emailValidator(value),
                     onChanged: (value) => loginFormProvider.email = value,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: ColorsCustom.subtitleColor),
                     decoration:
                         CustomInputDecoration.authPageCustomInputBoxDecoration(
                       hint: 'Ingrese su correo',
-                      label: 'Email',
-                      icon: Icons.email_outlined,
                     ),
                   ),
                   const SizedBox(height: 24),
-                  TextFormField(
+                  CustomInput(
                     onChanged: (value) => loginFormProvider.password = value,
                     validator: (value) =>
                         validationService.passwordValidator(value),
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: ColorsCustom.subtitleColor),
                     decoration:
                         CustomInputDecoration.authPageCustomInputBoxDecoration(
-                      hint: '**********',
-                      label: 'Contraseña',
-                      icon: Icons.password_outlined,
-                    ),
+                            hint: 'Contraseña'),
                     obscureText: true,
                   ),
                   const SizedBox(

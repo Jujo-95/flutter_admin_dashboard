@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/services/colors_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,20 +17,17 @@ class CustomTitle extends StatelessWidget {
               fit: BoxFit.contain,
               child: Column(
                 children: [
-                  Text(
-                    'Panel',
-                    style: GoogleFonts.openSans(
-                        letterSpacing: 10,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                  Icon(
+                    Icons.location_on_rounded,
+                    size: 50,
+                    color: ColorsCustom.titleColor,
                   ),
                   Text(
-                    'Mide, controla... optimiza',
-                    style: GoogleFonts.openSans(
+                    'Real Estate dashboard',
+                    style: GoogleFonts.inter(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: ColorsCustom.subtitleColor),
                   ),
                 ],
               ),

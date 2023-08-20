@@ -1,7 +1,10 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/register_form_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
+import 'package:admin_dashboard/services/colors_custom.dart';
 import 'package:admin_dashboard/services/validation_service.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
+import 'package:admin_dashboard/ui/inputs/custom_input.dart';
 import 'package:admin_dashboard/ui/inputs/custom_input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +25,7 @@ class RegisterView extends StatelessWidget {
               horizontal: 24,
               vertical: 20,
             ),
-            color: Colors.black,
+            color: ColorsCustom.backgroundColor,
             child: Center(
                 child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 370),
@@ -30,54 +33,69 @@ class RegisterView extends StatelessWidget {
                 autovalidateMode: AutovalidateMode.always,
                 child: Column(
                   children: [
-                    TextFormField(
+                    CustomInput(
                       onChanged: (value) => registerFormProvider.name = value,
                       validator: (value) =>
                           validationService.nameValidator(value),
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: ColorsCustom.subtitleColor),
                       decoration: CustomInputDecoration
                           .authPageCustomInputBoxDecoration(
-                        hint: 'Ingrese su nombre',
-                        label: 'Nombre',
-                        icon: Icons.text_fields,
+                        hint: 'Nombre',
                       ),
                     ),
                     const SizedBox(height: 24),
-                    TextFormField(
+                    CustomInput(
                       onChanged: (value) => registerFormProvider.email = value,
                       validator: (value) =>
                           validationService.emailValidator(value),
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: ColorsCustom.subtitleColor),
                       decoration: CustomInputDecoration
                           .authPageCustomInputBoxDecoration(
-                        hint: 'Ingrese su correo',
-                        label: 'Email',
-                        icon: Icons.email_outlined,
+                        hint: 'Correo',
                       ),
                     ),
                     const SizedBox(height: 24),
-                    TextFormField(
+                    CustomInput(
                       onChanged: (value) =>
                           registerFormProvider.password = value,
                       validator: (value) =>
                           validationService.passwordValidator(value),
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: ColorsCustom.subtitleColor),
+                      obscureText: true,
                       decoration: CustomInputDecoration
                           .authPageCustomInputBoxDecoration(
-                        hint: '**********',
-                        label: 'Contraseña',
-                        icon: Icons.password_outlined,
+                        hint: 'Contaseña',
                       ),
                     ),
                     const SizedBox(height: 24),
                     CustomOutlinedButton(
                         onPressed: () {
-                          registerFormProvider.validateForm();
+                          final validForm = registerFormProvider.validateForm();
+                          if (!validForm) return;
+
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .register(
+                            registerFormProvider.email,
+                            registerFormProvider.password,
+                            registerFormProvider.name,
+                          );
                         },
                         text: 'Crear cuenta'),
                     const SizedBox(height: 24),
                     TextButton(
                       onPressed: () {
+                        final validForm = registerFormProvider.validateForm();
+                        if (!validForm) return;
+
+                        Provider.of<AuthProvider>(
+                          context,
+                          listen: false,
+                        ).register(
+                          registerFormProvider.email,
+                          registerFormProvider.password,
+                          registerFormProvider.name,
+                        );
+
                         Navigator.pushNamed(context, Flurorouter.loginRoute);
                       },
                       child: const Text(
