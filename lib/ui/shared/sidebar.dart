@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/sidebar_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/colors_custom.dart';
@@ -23,6 +24,9 @@ class Sidebar extends StatelessWidget {
     final SidebarProvider sidebarProvider =
         Provider.of<SidebarProvider>(context);
 
+    final AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+
     return Container(
       width: 300,
       height: double.infinity,
@@ -31,7 +35,7 @@ class Sidebar extends StatelessWidget {
         children: [
           //Logo(),
           ProfileContainer(
-            name: 'Juan José García',
+            name: authProvider.user!.nombre,
             role: 'Standard Account',
           ),
           LineSeparator(),
@@ -50,9 +54,13 @@ class Sidebar extends StatelessWidget {
             onPressed: () {},
           ),
           MenuItem(
-            text: 'Categories',
+            text: 'Properties',
+            isActive:
+                sidebarProvider.currentPage == Flurorouter.categoriesRoute,
             //icon: Icons.compass_calibration_rounded,
-            onPressed: () {},
+            onPressed: () {
+              navigateTo(Flurorouter.categoriesRoute);
+            },
           ),
           MenuItem(
             text: 'Products',
@@ -74,7 +82,7 @@ class Sidebar extends StatelessWidget {
             text: 'Icons',
             //icon: Icons.compass_calibration_rounded,
             onPressed: () {
-              NavigationService.navigateTo(Flurorouter.iconsRoute);
+              navigateTo(Flurorouter.iconsRoute);
             },
           ),
 
@@ -84,7 +92,8 @@ class Sidebar extends StatelessWidget {
             text: 'Logout',
             //icon: Icons.compass_calibration_rounded,
             onPressed: () {
-              navigateTo(Flurorouter.iconsRoute);
+              authProvider.logout();
+              navigateTo(Flurorouter.loginRoute);
             },
           ),
         ],

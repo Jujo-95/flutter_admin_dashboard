@@ -14,6 +14,8 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     return ChangeNotifierProvider(
       create: (_) => RegisterFormProvider(),
       child: Builder(
@@ -36,6 +38,8 @@ class RegisterView extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomInput(
+                      onFieldSubmitted: () =>
+                          onFormSubmit(registerFormProvider, authProvider),
                       onChanged: (value) => registerFormProvider.name = value,
                       validator: (value) =>
                           validationService.nameValidator(value),
@@ -47,6 +51,8 @@ class RegisterView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
+                      onFieldSubmitted: () =>
+                          onFormSubmit(registerFormProvider, authProvider),
                       onChanged: (value) => registerFormProvider.email = value,
                       validator: (value) =>
                           validationService.emailValidator(value),
@@ -58,6 +64,8 @@ class RegisterView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     CustomInput(
+                      onFieldSubmitted: () =>
+                          onFormSubmit(registerFormProvider, authProvider),
                       onChanged: (value) =>
                           registerFormProvider.password = value,
                       validator: (value) =>
@@ -72,31 +80,22 @@ class RegisterView extends StatelessWidget {
                     const SizedBox(height: 24),
                     CustomOutlinedButton(
                         onPressed: () {
-                          final validForm = registerFormProvider.validateForm();
-                          if (!validForm) return;
+                          onFormSubmit(registerFormProvider, authProvider);
+                          // final validForm = registerFormProvider.validateForm();
+                          // if (!validForm) return;
 
-                          final authProvider =
-                              Provider.of<AuthProvider>(context, listen: false);
+                          // //final authProvider =
+                          // //    Provider.of<AuthProvider>(context, listen: false);
 
-                          authProvider.register(
-                              registerFormProvider.email,
-                              registerFormProvider.password,
-                              registerFormProvider.name);
+                          // authProvider.register(
+                          //     registerFormProvider.email,
+                          //     registerFormProvider.password,
+                          //     registerFormProvider.name);
                         },
                         text: 'Crear cuenta'),
                     const SizedBox(height: 24),
                     TextButton(
                       onPressed: () {
-                        final validForm = registerFormProvider.validateForm();
-                        if (!validForm) return;
-
-                        final authProvider =
-                            Provider.of<AuthProvider>(context, listen: false);
-                        authProvider.register(
-                            registerFormProvider.email,
-                            registerFormProvider.password,
-                            registerFormProvider.name);
-
                         Navigator.pushNamed(context, Flurorouter.loginRoute);
                       },
                       child: const Text(
@@ -114,5 +113,16 @@ class RegisterView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void onFormSubmit(
+      RegisterFormProvider registerFormProvider, AuthProvider authProvider) {
+    final validForm = registerFormProvider.validateForm();
+    if (!validForm) return;
+
+    //final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    authProvider.register(registerFormProvider.email,
+        registerFormProvider.password, registerFormProvider.name);
   }
 }

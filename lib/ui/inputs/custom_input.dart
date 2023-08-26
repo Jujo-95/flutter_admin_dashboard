@@ -8,6 +8,7 @@ class CustomInput extends StatelessWidget {
   final InputDecoration? decoration;
   final bool obscureText;
   final height;
+  final onFieldSubmitted;
 
   const CustomInput({
     super.key,
@@ -17,6 +18,7 @@ class CustomInput extends StatelessWidget {
     required this.decoration,
     this.obscureText = false,
     this.height = 50,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -36,6 +38,7 @@ class CustomInput extends StatelessWidget {
               ]),
         ),
         TextFormField(
+          onFieldSubmitted: (_) => onFieldSubmitted(_),
           onChanged: (_) => onChanged(_),
           validator: (_) => validator(_),
           style: style,

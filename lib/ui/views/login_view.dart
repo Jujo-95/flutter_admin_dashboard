@@ -36,6 +36,8 @@ class LoginView extends StatelessWidget {
               child: Column(
                 children: [
                   CustomInput(
+                    onFieldSubmitted: (_) =>
+                        onFormSubmit(loginFormProvider, authProvider),
                     validator: (value) =>
                         validationService.emailValidator(value),
                     onChanged: (value) => loginFormProvider.email = value,
@@ -47,6 +49,8 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   CustomInput(
+                    onFieldSubmitted: (_) =>
+                        onFormSubmit(loginFormProvider, authProvider),
                     onChanged: (value) => loginFormProvider.password = value,
                     validator: (value) =>
                         validationService.passwordValidator(value),
@@ -88,5 +92,14 @@ class LoginView extends StatelessWidget {
         );
       }),
     );
+  }
+
+  void onFormSubmit(
+      LoginFormProvider loginFormProvider, AuthProvider authProvider) {
+    final isValid = loginFormProvider.validateForm();
+
+    if (isValid) {
+      authProvider.login(loginFormProvider.email, loginFormProvider.password);
+    }
   }
 }
