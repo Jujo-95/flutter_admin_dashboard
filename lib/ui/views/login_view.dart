@@ -64,6 +64,7 @@ class LoginView extends StatelessWidget {
                     height: 24,
                   ),
                   CustomOutlinedButton(
+                      isFilled: true,
                       onPressed: () {
                         final isValid = loginFormProvider.validateForm();
 

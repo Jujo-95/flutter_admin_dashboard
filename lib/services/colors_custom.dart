@@ -7,4 +7,5 @@ class ColorsCustom {
   static Color subtitleColor = Color.fromRGBO(161, 160, 163, 1);
   static Color titleColor = Color.fromRGBO(27, 27, 29, 1);
   static Color primaryButtonColor = Color.fromRGBO(23, 81, 208, 1);
+  static Color primaryButtonNotFilled = Color.fromRGBO(199, 202, 209, 1);
 }

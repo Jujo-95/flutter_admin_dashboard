@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/services/colors_custom.dart';
 import 'package:flutter/material.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
@@ -5,6 +6,7 @@ class CustomOutlinedButton extends StatelessWidget {
   final String text;
   final Color color;
   final bool isFilled;
+  final IconData? icon;
 
   const CustomOutlinedButton({
     super.key,
@@ -12,6 +14,7 @@ class CustomOutlinedButton extends StatelessWidget {
     required this.text,
     this.color = Colors.blueAccent,
     this.isFilled = false,
+    this.icon,
   });
 
   @override
@@ -20,19 +23,52 @@ class CustomOutlinedButton extends StatelessWidget {
       style: ButtonStyle(
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
-          side: MaterialStateProperty.all(BorderSide(color: color)),
+          side: MaterialStateProperty.all(BorderSide(
+              color: isFilled
+                  ? Colors.transparent
+                  : ColorsCustom.primaryButtonNotFilled)),
           backgroundColor: MaterialStateProperty.all(
-              isFilled ? color.withOpacity(0.3) : Colors.transparent)),
+              isFilled ? ColorsCustom.primaryButtonColor : Colors.white)),
       onPressed: () => onPressed(),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 16),
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        child: icon == null
+            ? Text(
+                text,
+                style: TextStyle(
+                    fontSize: 16,
+                    color: isFilled
+                        ? Colors.white
+                        : ColorsCustom.primaryButtonNotFilled,
+                    fontWeight: FontWeight.w500),
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: isFilled
+                        ? Colors.white
+                        : ColorsCustom.primaryButtonNotFilled,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Text(
+                    text,
+                    style: TextStyle(
+                        fontSize: 16,
+                        color:
+                            isFilled ? Colors.white : ColorsCustom.titleColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
       ),
     );
   }

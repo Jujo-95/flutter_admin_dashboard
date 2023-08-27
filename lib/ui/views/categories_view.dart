@@ -1,9 +1,12 @@
 import 'package:admin_dashboard/datatables/categories_datatable.dart';
 import 'package:admin_dashboard/models/category.dart';
 import 'package:admin_dashboard/providers/categories_provider.dart';
+import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
+import 'package:admin_dashboard/ui/modals/category_modals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:side_sheet/side_sheet.dart';
 
 class CategoriesView extends StatefulWidget {
   const CategoriesView({super.key});
@@ -27,13 +30,29 @@ class _CategoriesViewState extends State<CategoriesView> {
         Provider.of<CategoriesProvider>(context).categories;
 
     return ListView(
+      padding: EdgeInsets.all(24),
       physics: ClampingScrollPhysics(),
       children: [
-        Center(
-            child: Text(
-          'Propiedades',
-          style: CustomLabels.h1,
-        )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+                child: Text(
+              'Propiedades',
+              style: CustomLabels.h1,
+            )),
+            CustomOutlinedButton(
+                icon: Icons.add_circle_rounded,
+                isFilled: false,
+                onPressed: () {
+                  SideSheet.right(
+                      body: CategoryModal(),
+                      context: context,
+                      sheetColor: Colors.transparent);
+                },
+                text: 'Adicionar categoria'),
+          ],
+        ),
         SizedBox(
           height: 14,
         ),
@@ -44,7 +63,7 @@ class _CategoriesViewState extends State<CategoriesView> {
             DataColumn(label: Text('column3')),
             DataColumn(label: Text('column4'))
           ],
-          source: CategoriesDTS(categorias),
+          source: CategoriesDTS(categorias, context),
           rowsPerPage: _rowsPerPage,
           onRowsPerPageChanged: (value) {
             setState(() {

@@ -6,11 +6,14 @@ class NoPageFoundView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '404 - Página no encontrada',
-        style: GoogleFonts.montserratAlternates(
-            fontSize: 50, fontWeight: FontWeight.bold),
+    return Padding(
+      padding: EdgeInsets.all(24),
+      child: Center(
+        child: Text(
+          '404 - Página no encontrada',
+          style: GoogleFonts.montserratAlternates(
+              fontSize: 50, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
